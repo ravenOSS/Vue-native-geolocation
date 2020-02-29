@@ -1,15 +1,15 @@
 <template>
   <view class="container">
-    <text>Location:</text>
-    <text>{{location}}</text>
-    <touchable-opacity :on-press="getLocation" >
-        <text>get location</text>
+    <touchable-opacity :on-press="getLocation">
+      <text class="text-field-title">Get Location</text>
     </touchable-opacity>
-    <text>{{ errorMessage }}</text>
+    <text class="text-field-title">Location:</text>
+    <text>{{ location }}</text>
+    <text class="text-error">{{ errorMessage }}</text>
   </view>
 </template>
 
- <script>
+<script>
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
@@ -17,24 +17,26 @@ import * as Permissions from "expo-permissions";
 export default {
   data: function() {
     return {
-      location: {},
+      location: "",
       errorMessage: ""
     };
   },
   methods: {
     getLocation: function() {
-      Permissions.askAsync(Permissions.LOCATION).then(status => {
-        if (!status.granted) {
-          this.errorMessage = "Permission to access location was denied";
-        } else if (status.granted) {
-        Location.getCurrentPositionAsync({}).then(location1 => {
-          this.location = location1.coords;
-          this.errorMessage = ""
+      Permissions.askAsync(Permissions.LOCATION)
+        .then(status => {
+          if (!status.granted) {
+            this.errorMessage = "Permission to access location was denied";
+          } else if (status.granted) {
+            Location.getCurrentPositionAsync({}).then(location1 => {
+              this.location = location1.coords;
+              this.errorMessage = "";
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
         });
-        }
-      }).catch((err)=>{
-        console.log(err);
-     });
     }
   }
 };
@@ -47,7 +49,12 @@ export default {
   justify-content: center;
   flex: 1;
 }
-.text-color-primary {
+.text-field-title {
   color: blue;
+  font-size: 18;
+  margin: 10;
+}
+.text-error {
+  color: red;
 }
 </style>
