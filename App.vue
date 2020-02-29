@@ -28,7 +28,7 @@ export default {
           this.errorMessage = "Permission to access location was denied";
         }
         Location.getCurrentPositionAsync({}).then(location1 => {
-          location = location1;
+          this.location = location1;
         });
       }).catch((err)=>{
         console.log(err);
