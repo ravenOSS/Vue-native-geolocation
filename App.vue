@@ -5,6 +5,7 @@
     <touchable-opacity :on-press="getLocation" >
         <text>get location</text>
     </touchable-opacity>
+    <text>{{ errorMessage }}</text>
   </view>
 </template>
 
@@ -24,7 +25,7 @@ export default {
     getLocation: function() {
       Permissions.askAsync(Permissions.LOCATION).then(status => {
         if (status !== "granted") {
-          errorMessage = "Permission to access location was denied";
+          this.errorMessage = "Permission to access location was denied";
         }
         Location.getCurrentPositionAsync({}).then(location1 => {
           location = location1;
