@@ -1,7 +1,7 @@
 <template>
   <view class="container">
     <text>Location:</text>
-    <text>{{location.latitude}}</text>
+    <text>{{location}}</text>
     <touchable-opacity :on-press="getLocation" >
         <text>get location</text>
     </touchable-opacity>
@@ -26,10 +26,13 @@ export default {
       Permissions.askAsync(Permissions.LOCATION).then(status => {
         if (status !== "granted") {
           this.errorMessage = "Permission to access location was denied";
-        }
+        } else if (status === granted) {
+
         Location.getCurrentPositionAsync({}).then(location1 => {
-          this.location = location1;
+          this.location = location1.coords;
+          this.errorMessage = ""
         });
+        }
       }).catch((err)=>{
         console.log(err);
      });
