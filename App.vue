@@ -24,10 +24,9 @@ export default {
   methods: {
     getLocation: function() {
       Permissions.askAsync(Permissions.LOCATION).then(status => {
-        if (status !== "granted") {
+        if (!status.granted) {
           this.errorMessage = "Permission to access location was denied";
-        } else if (status === granted) {
-
+        } else if (status.granted) {
         Location.getCurrentPositionAsync({}).then(location1 => {
           this.location = location1.coords;
           this.errorMessage = ""
