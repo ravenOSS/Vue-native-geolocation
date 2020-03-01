@@ -1,27 +1,30 @@
-# Documentation Geolocation Example does not function as expected. #
-## This is a review of the issues and code changes to address them. ##
+### Documentation Geolocation Example does not function as expected. ###
+#### Review of issues and code changes to address them. ####
 
-* Packages:
+**Packages:**
 
-> Node v10.15.0
-> NPM v6.13.0
->  "dependencies": {
->  "expo": "~36.0.0",
->  "react": "~16.9.0",
->  "react-dom": "~16.9.0",
->  "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
->  "react-native-web": "~0.11.7",
->  "vue-native-core": "0.1.4",
->  "vue-native-helper": "0.1.4"
+- Node v10.15.0
+- NPM v6.13.0
+ >
+- "dependencies": {
+-  "expo": "~36.0.0",
+-  "react": "~16.9.0",
+-  "react-dom": "~16.9.0",
+- "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+-  "react-native-web": "~0.11.7",
+-  "vue-native-core": "0.1.4",
+-  "vue-native-helper": "0.1.4"
 
 1. **Change package imports to match Expo API**
-   - Addressed with PR: 
-   - Docs import 'Constants' which do not appear to be required for code example
+  - Addressed with PR:8cd66c1. Issue: expo imports #52
+  - Docs example imports 'Constants' which do not appear to be required for code example
+  - Did not seem to require 'sensors' import. Could now be built-in.
+  - See Expo sensor update #60
 
 2. **Condition: location access denied**
-   - Error: "Can't find variable: 'errorMessage'
-   - Fix: Prefix errorMesssage with 'this' in getLocation method
-   - Fix: Add <text>errorMessage</text> field to template (otherwise no output)
+  - Error: "Can't find variable: 'errorMessage'
+  - Fix: Prefix errorMesssage with 'this' in getLocation method
+  - Fix: Add <text>errorMessage</text> field to template (otherwise no output)
 
 3. **Condition: When user denies permission for location access**
   - Error: "possible unhandled promise rejection"
@@ -29,7 +32,6 @@
   - Fix: add conditional to getCurrentPositionAsync
    ```
     } else if (status.granted) {
-    'code'
   ```
 4. **Condition: User allows location access**
   - Error: no location display
@@ -40,7 +42,7 @@
 5. **Condition: No location display after status.status = true**
   - Error: No error message
   - Fix: Actual data returned from getCurrentPositionAsync is a Coords object
-  - Fix: Change access position data object
+  - Fix: Change access to position data object
     ```
      this.location = location1.coords;
      // add <text>{{ location }}</text> to template
@@ -57,7 +59,7 @@
 7. **Revised code example**
    [Vue-native-geolocation](https://github.com/ravenOSS/Vue-native-geolocation)
 
-8. **General Note**
+8. **General Notes**
   - Expo app and/or Expo server frequently require restart for state reset 
   - Presently getting DatePicker and TimePicker warnings for new merged packages.
   - Fix: Haven't found one yet.
