@@ -1,5 +1,5 @@
-#Documentation Geolocation Example does not function as expected.#
-##This is a review of the issues and code changes to address them.##
+# Documentation Geolocation Example does not function as expected. #
+## This is a review of the issues and code changes to address them. ##
 
 * Packages:
 
@@ -24,7 +24,7 @@
    - Fix: Add <text>errorMessage</text> field to template (otherwise no output)
 
 3. **Condition: When user denies permission for location access**
-   - Error: "possible unhandled promise rejection
+  - Error: "possible unhandled promise rejection"
   - Cause: Code does not trap denial and falls through to getCurrentPositionAsync
   - Fix: add conditional to getCurrentPositionAsync
    ```
@@ -40,9 +40,10 @@
 5. **Condition: No location display after status.status = true**
   - Error: No error message
   - Fix: Actual data returned from getCurrentPositionAsync is a Coords object
-  - Fix: Access position data 
+  - Fix: Change access position data object
     ```
      this.location = location1.coords;
+     // add <text>{{ location }}</text> to template
      OR
      this.lng = location.coords.longitude
      // requires adding lng to data
@@ -56,10 +57,10 @@
 7. **Revised code example**
    [Vue-native-geolocation](https://github.com/ravenOSS/Vue-native-geolocation)
 
-8. **General**
-   Expo app and/or Expo server frequently require restart for state reset 
-   Presently getting DatePicker and TimePicker warnings for new merged packages.
-   Fix: Haven't found one yet.
+8. **General Note**
+  - Expo app and/or Expo server frequently require restart for state reset 
+  - Presently getting DatePicker and TimePicker warnings for new merged packages.
+  - Fix: Haven't found one yet.
 
 
 *Please review and comment. I can attempt PR if accepted*
