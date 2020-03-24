@@ -3,14 +3,16 @@
     <touchable-opacity :on-press="getLocation">
       <text class="text-field-title">Get Location</text>
     </touchable-opacity>
-    <text class="text-field-title">Location:</text>
+    <text class="text-field-title">Location Object:</text>
     <text>{{ location }}</text>
+    <text class="text-field-title">Latitude Only:</text>
+    <text>{{ latitude }}</text>
+
     <text class="text-error">{{ errorMessage }}</text>
   </view>
 </template>
 
 <script>
-// import Constants from "expo-constants";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
@@ -18,6 +20,7 @@ export default {
   data: function() {
     return {
       location: "",
+      latitude: "",
       errorMessage: ""
     };
   },
@@ -29,7 +32,8 @@ export default {
             this.errorMessage = "Permission to access location was denied";
           } else if (status.granted) {
             Location.getCurrentPositionAsync({}).then(location1 => {
-              this.location = location1.coords;
+              this.location = location1;
+              this.latitude = location1.coords.latitude
               this.errorMessage = "";
             });
           }
